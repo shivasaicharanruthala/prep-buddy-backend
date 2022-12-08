@@ -1,4 +1,3 @@
-import { request, response } from 'express';
 import * as contactsService from '../services/todo-service.js'
 
 const setErrorResponse=(error, response, statusCode) =>{ //this is for success response

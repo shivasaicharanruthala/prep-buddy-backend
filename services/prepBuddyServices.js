@@ -3,6 +3,8 @@ import transporter from './userValidationServices.js';
 import userModel from '../models/prepBuddy.users.models.js';
 import PrepBuddyUsersModels from "../models/prepBuddy.users.models.js";
 import userValidation from '../models/prepBuddy.userValidation.models.js';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
 // returns userdata from database by searching with email
 export const getByEmail = async (userformData) => {
@@ -17,7 +19,7 @@ export const getById = async (user) => {
 // Sends an verification email to user's email address
 export const sendUserVerficationEmail = async (userformdata, res) => {
     const userStatus = await getByEmail(userformdata);
-    const currentURL = 'https://prep-buddy-backend.herokuapp.com/';
+    const currentURL = 'http://localhost:8080/';
     const uniqueString = userStatus.id;
 
     // Email format which will be sent to user for verification purpose
@@ -101,7 +103,7 @@ export const userVerfication = async (userId, req, res) => {
                         userValidation.deleteOne({ "userId": userId })
                             .then(() => {
                                 //Send the verfied html file as status
-                                res.sendFile("./verified.html");
+                                res.sendFile(`${dirname(fileURLToPath(import.meta.url))}/verified.html`);
                             })
                             .catch((err) => {
                                 let message = "Error occured while finalizing successful record";
